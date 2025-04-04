@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proses Memasak Toast</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #fff8f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #e76f51;
+      margin-top: 30px;
+    }
+
+    .ingredients {
+      margin: 150px auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .ingredient {
+      width: 100px;
+      cursor: grab;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background-color: white;
+      padding: 5px;
+    }
+
+    .toast-area {
+      margin: 40px auto;
+      width: 220px;
+      height: 220px;
+      position: relative;
+    }
+
+    .toast-base {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+
+    .dropped {
+      position: absolute;
+      width: 130px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #2a9d8f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 40px;
+    }
+
+    button:hover {
+      background-color: #21867a;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Racik Toastmu Sendiri!</h1>
+
+  <div class="toast-area" id="toast">
+    <img src="images/toast-base.png" alt="Base Toast" class="toast-base">
+  </div>
+
+  <div class="ingredients">
+    <img src="images/selada.png" class="ingredient" draggable="true" id="selada" alt="Selada">
+    <img src="images/telur.png" class="ingredient" draggable="true" id="telur" alt="Telur">
+    <img src="images/keju.png" class="ingredient" draggable="true" id="keju" alt="Keju">
+    <img src="images/coklat.png " class="ingredient" draggable="true" id="selai" alt="Selai Coklat">
+  </div>
+
+  <button onclick="selesai()">Selesai</button>
+
+  <script>
+    let draggedItemId = null;
+
+    // Simpan ID bahan yang sedang di-drag
+    document.querySelectorAll('.ingredient').forEach(item => {
+      item.addEventListener('dragstart', function (e) {
+        draggedItemId = e.target.id;
+      });
+    });
+
+    const toast = document.getElementById('toast');
+    toast.addEventListener('dragover', function (e) {
+      e.preventDefault();
+    });
+
+    toast.addEventListener('drop', function (e) {
+      e.preventDefault();
+      if (draggedItemId) {
+        const newItem = document.createElement('img');
+        newItem.src = document.getElementById(draggedItemId).src;
+        newItem.className = 'dropped';
+
+        // Tambahkan sedikit acakan posisi
+        const offsetX = Math.random() * 60 - 30;
+        const offsetY = Math.random() * 60 - 30;
+        newItem.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px)`;
+
+        toast.appendChild(newItem);
+      }
+    });
+
+    function selesai() {
+      alert("🎉 Selamat! Makananmu sudah siap!");
+    }
+  </script>
+
+</body>
+</html>
